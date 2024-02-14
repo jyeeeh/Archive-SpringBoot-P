@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- application.yml에   mybatis: type-aliases-package: com.sloop.archive.category.domain 추가 -->
+<!-- jdbc url에 &allowMultiQueries=true 추가 -->
+
+<mapper namespace='com.sloop.archive.category.mapper.CategoryMapper'>
+    <select id="getAllCategories" resultType="com.sloop.archive.category.domain.CategoryDTO">
+        select *
+        from tb_category
+    </select>
+
+    <!-- parentId의 자식 노드들을 조회한다. parentId의 이름까지 조회한다. -->
+    <select id="getAllSubCategoriesByParentId" parameterType="Long" resultType="com.sloop.archive.category.domain.CategoryDTO">
+        select c.id, c.parent_id, c.name, c.show_flag, c.depth, c.orders, c.update_flag, c.update_date, c.user_id, prt_c.name as parentName, count(cc.id) as countNumber
+        from tb_category as c
+                left join tb_category as prt_c on c.parent_id = prt_c.id
+                left join tb_content_category as cc on cc.category_id = c.id
+                group by c.id having c.parent_id = #{parentId}
+        order by c.orders
+    </select>
+
+    <!-- 카테고리의 순서를 변경한다. -->
+    <update id="updateOrders" parameterType="java.util.List">
+        <foreach collection="newOrders" index="index" item="item" separator=";">
+            update tb_category
+            set orders = #{index} + 1,
+            update_flag = 1,
+            update_date = now(),
+            user_id = #{userId}
+            where id = #{item}
+        </foreach>
+    </update>
+
+    <!-- 카테고리 추가 -->
+    <insert id="createCategory" parameterType="com.sloop.archive.category.domain.CategoryDTO">
+        insert into tb_category(parent_id, name, show_flag, depth, orders, user_id)
+            (select #{parentId},
+                    #{name},
+                    #{showFlag},
+                    (select depth + 1 from tb_category where id = #{parentId})              as depth,
+                    (select ifnull(max(orders) + 1, 1) from tb_category where parent_id = #{parentId}) as orders,
+                    #{userId})
+    </insert>
+
+    <!-- 카테고리의 parentId, orders 조회 -->
+    <select id="selectParentIdAndOrders" parameterType="Long" resultType="java.util.Map">
+        select parent_id as parentId, orders
+        from tb_category
+        where id = #{id}
+    </select>
+
+    <!-- 카테고리의 부모 id, 이름, 사용여부, 순서, 깊이 변경 -->
+    <update id="updateCategoryContents" parameterType="com.sloop.archive.category.domain.CategoryDTO">
+        update tb_category
+        set parent_id   = #{parentId},
+            name        = #{name},
+            show_flag   = #{showFlag},
+            depth = (select depth + 1 from tb_category where id = #{parentId}),
+            orders      = #{orders},
+            update_flag = 1,
+            update_date = now(),
+            user_id     = #{userId}
+        where id = #{id}
+    </update>
+
+    <!-- parentId의 하위 카테고리 중 순서가 orders 이상인 카테고리의 순서를 앞당긴다. -->
+    <update id="shiftOrders">
+        update tb_category
+        set orders = orders -1
+        where parent_id = #{parentId} and orders > #{orders}
+    </update>
+
+    <!-- parentId의 하위 카테고리의 마지막 순서를 조회한다. -->
+    <select id="getLastOrders" parameterType="Long" resultType="int">
+        select ifnull(max(orders), 0) as orders
+         from tb_category
+         where parent_id = #{parentId}
+    </select>
+
+    <select id="getCategory" parameterType="Long" resultType="com.sloop.archive.category.domain.CategoryDTO">
+        select c.id, c.parent_id, c.name, c.show_flag, c.depth, c.orders, prt_c.name as parentName
+        from tb_category as c
+                 left join tb_category as prt_c on c.parent_id = prt_c.id
+        where c.id = #{id}
+    </select>
+
+    <select id="checkId" parameterType="Long" resultType="int">
+        select count(id)
+        from tb_category
+        where id = #{id}
+    </select>
+</mapper>

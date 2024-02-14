@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.sloop.archive.log.mapper.LogMapper'>
+
+    <!--  접속 Log  -->
+    <insert id="insertAccessLog" parameterType="com.sloop.archive.log.domain.AccessLogDTO">
+        INSERT INTO tb_access_log(user_id, login_flag, log_timestamp)
+        VALUES (#{user_id},#{login_flag},now())
+    </insert>
+
+    <!--  접속자 수 분석 그래프  -->
+    <select id="getAccessCountsByDate" resultType="hashmap">
+        SELECT DATE_FORMAT(log_timestamp, '%Y-%m-%d') AS "date",
+               COUNT(id) AS visitCount
+        FROM tb_access_log
+        WHERE log_timestamp IS NOT NULL
+          AND login_flag = 1
+        GROUP BY DATE_FORMAT(log_timestamp, '%Y-%m-%d')
+        ORDER BY date ASC;
+    </select>
+
+    <!-- 파일다운로드 Log insert -->
+    <insert id="insertDownloadLog" parameterType="com.sloop.archive.log.domain.DownloadLogDTO">
+        INSERT INTO tb_download_log(user_id, content_id, log_timestamp)
+        VALUES (#{user_id},#{content_id},now())
+    </insert>
+
+    <!-- 파일다운로드 수 분석 그래프 -->
+    <select id="getDownLoadCounts" resultType="hashmap">
+        SELECT c.title,
+               DATE_FORMAT(d.log_timestamp, '%Y-%m-%d') AS "date",
+               COUNT(d.id) AS downloadCount
+        FROM  tb_download_log as d
+                  JOIN tb_content as c
+                       ON d.content_id = c.id
+        WHERE d.log_timestamp IS NOT NULL
+        --  GROUP BY DATE_FORMAT(d.log_timestamp, '%Y-%m-%d')
+        GROUP BY c.title
+        ORDER BY date ASC
+        LIMIT 10;
+    </select>
+
+    <!-- 카테고리 조회 Log insert -->
+    <insert id="insertPostLog" parameterType="com.sloop.archive.log.domain.PostLogDTO">
+        INSERT INTO tb_post_log(user_id, content_id, log_timestamp)
+        VALUES (#{user_id},#{content_id},now())
+    </insert>
+
+    <!-- 콘텐츠 조회 분석 그래프 -->
+    <select id="postHitCounts" resultType="hashmap">
+        SELECT c.title,
+               DATE_FORMAT(p.log_timestamp, '%Y-%m-%d') AS "date",
+               COUNT(p.id) AS postHitCount
+        FROM  tb_post_log as p
+                  JOIN tb_content as c
+                       ON p.content_id = c.id
+        WHERE p.log_timestamp IS NOT NULL
+        --  GROUP BY DATE_FORMAT(d.log_timestamp, '%Y-%m-%d')
+        GROUP BY c.title
+        ORDER BY date ASC
+            LIMIT 10;
+    </select>
+</mapper>

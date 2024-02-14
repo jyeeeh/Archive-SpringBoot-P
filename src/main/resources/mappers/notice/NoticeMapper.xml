@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sloop.archive.notice.mapper.NoticeMapper">
+
+    <select id="getNoticeList" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice WHERE delete_flag = 0 AND pinned = 0 ORDER BY pinned DESC, id DESC LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM tb_notice WHERE     delete_flag = 0
+    </select>
+
+    <select id="getNoticeById" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice WHERE id = #{id} AND delete_flag = 0
+    </select>
+
+    <insert id="saveNotice" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_notice (user_id, title, content, views, register_date, pinned)
+        VALUES (#{userId}, #{title}, #{content}, #{views}, #{registerDate}, #{pinned})
+    </insert>
+
+    <update id="updateNotice" parameterType="com.sloop.archive.notice.domain.NoticeDTO">
+        UPDATE tb_notice SET title = #{title}, content = #{content}, pinned = #{pinned}, update_date = CURRENT_TIMESTAMP, update_flag = 1 WHERE id = #{id}
+    </update>
+
+    <update id="deleteNotice">
+        UPDATE tb_notice SET delete_flag = 1, delete_date = CURRENT_TIMESTAMP WHERE id = #{id}
+    </update>
+
+    <update id="increaseViews">
+        UPDATE tb_notice SET views = views + 1 WHERE id = #{id}
+    </update>
+
+    <select id="getNoticesPinned" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice WHERE delete_flag = 0 AND pinned = 1 ORDER BY id DESC
+    </select>
+
+    <select id="getNoticePinnedFirst" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice WHERE delete_flag = 0 AND pinned = 1 ORDER BY id DESC LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="getAllNoticePinnedFirst" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice WHERE delete_flag = 0 ORDER BY pinned DESC, id DESC LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="getSearchCount" resultType="int">
+        SELECT COUNT(*) FROM tb_notice
+        WHERE title LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="searchNotice" resultType="com.sloop.archive.notice.domain.NoticeDTO">
+        SELECT * FROM tb_notice
+        WHERE (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%'))
+        ORDER BY id DESC
+            limit #{pageSize} offset #{start}
+    </select>
+
+</mapper>

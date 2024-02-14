@@ -1,0 +1,91 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.0.0' // 기본 버전
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.sloop'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootWar.enabled = false
+war.enabled = true
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// mariadb
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	// implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
+
+
+	// log4jdbc
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// jsp springboot 3.0이상
+	implementation 'jakarta.servlet:jakarta.servlet-api'
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+	// model mapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+
+	// StringUtils
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+	// gson
+	implementation 'com.google.code.gson:gson:2.10.1'
+
+	// aws core
+	implementation("com.amazonaws:aws-java-sdk-s3:1.12.641")
+
+	// 주석 아래로 작성 -- 김지원
+	//Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+	// 주석 아래로 작성 -- 이지연
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+	// 주석 아래로 작성 -- 이창규
+	//이미지썸네일
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.14'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// 주석 아래로 작성 -- 차소영
+
+
+	// 주석 아래로 작성 -- 최지혜
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.sloop.archive.user.mapper.UserMapper'>
+
+    <select id="getAllUserInfo" resultType="com.sloop.archive.user.domain.UserInfo">
+        select distinct
+            tu.id, tu.userid, tu.name,
+            tur.role,
+            tul.download_count, tul.approve_count ,tul.latest_login
+        from tb_user tu
+                 left join tb_user_role tur on tu.id=tur.user_id
+                 left join tb_user_log tul on tu.id=tul.user_id
+        order by tu.id desc
+    </select>
+
+    <select id="getUserInfoListByUserSearchRequest" resultType="com.sloop.archive.user.domain.UserInfo">
+        select distinct
+        tu.id, tu.userid, tu.name,
+        tur.role,
+        tul.download_count, tul.approve_count ,tul.latest_login
+        from tb_user tu
+        left join tb_user_role tur on tu.id=tur.user_id
+        left join tb_user_log tul on tu.id=tul.user_id
+        where
+            <if test="request.searchRole != 'ALL'">
+                role=#{request.searchRole} and
+            </if>
+            <if test="request.searchType eq 'userid'">
+                userid like concat('%',#{request.searchWord},'%')
+            </if>
+            <if test="request.searchType eq 'name'">
+                name like concat('%',#{request.searchWord},'%')
+            </if>
+        order by tu.id desc
+    </select>
+
+    <insert id="registerUser" parameterType="com.sloop.archive.user.domain.UserDTO">
+        insert into tb_user(userid, password, name, email, phone) values (#{userid}, #{password}, #{name}, #{email}, #{phone})
+        <selectKey resultType="Long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="registerUserRole" parameterType="com.sloop.archive.user.domain.UserRoleDTO">
+        insert into tb_user_role(user_id, role) values (#{userId}, #{role})
+    </insert>
+
+    <insert id="registerUserLog" parameterType="Long">
+        insert into tb_user_log(user_id) values (#{id})
+    </insert>
+
+    <select id="checkId" resultType="int">
+        select count(userid) from tb_user where userid=#{id}
+    </select>
+
+    <select id="getUserById" resultType="com.sloop.archive.user.domain.UserForm">
+        select distinct
+            role, userid, password, name, email, phone
+        from tb_user tu, tb_user_role tur
+        where tu.id=#{id} and tur.user_id=#{id}
+    </select>
+
+    <update id="updateUser">
+        update tb_user set name=#{request.name}, email=#{request.email}, phone=#{request.phone} where id=#{id}
+    </update>
+
+    <update id="updateUserRole">
+        update tb_user_role set role=#{role} where user_id=#{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.sloop.archive.content.mapper.ContentMapper'>
+
+    <!-- tb_content 테이블 전체 컬럼 -->
+    <sql id="contentColumns">
+        id
+        , user_id
+        , type
+        , charge
+        , view
+        , title
+        , keyword
+        , description
+        , register_date
+        , update_flag
+        , update_date
+        , delete_flag
+        , delete_date
+        , approve_flag
+        , approve_user_id
+    </sql>
+    <!--<include refid="contentColumns"/>-->
+    <select id="findAllList" resultType="com.sloop.archive.content.domain.ContentDTO">
+        SELECT c.id , c.user_id , c.type ,c.charge ,c.view,c.title ,c.keyword ,c.description ,c.register_date ,c.update_flag ,c.update_date ,c.delete_flag ,c.delete_date ,c.approve_flag ,c.approve_user_id
+             ,i.id ,i.content_id, i.extension ,i.original_name ,i.saved_name ,i.thumb_name ,i.original_path ,i.original_path ,i.saved_path ,i.thumb_path
+        FROM tb_content AS c
+        INNER JOIN tb_image AS i ON c.id = i.content_id
+        ORDER BY c.id DESC
+    </select>
+
+    <insert id="regist" parameterType="com.sloop.archive.content.domain.ContentDTO">
+        insert into tb_content(
+            user_id
+            , type
+            , charge
+            , view
+            , title
+            , keyword
+            , description
+            , approve_flag
+            , approve_user_id)
+        values (
+                #{userId},
+                #{type},
+                #{charge},
+                #{view},
+                #{title},
+                #{keyword},
+                #{description},
+                #{approveFlag},
+                1)
+        <selectKey resultType="Long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <select id="findById" parameterType="Long" resultType="com.sloop.archive.content.domain.ContentDTO">
+        select <include refid="contentColumns"/>
+        from tb_content
+        where id = #{contentId}
+    </select>
+
+    <update id="update" parameterType="com.sloop.archive.content.domain.ContentDTO">
+        update tb_content
+        set type = #{type},
+            charge = #{charge},
+            view = #{view},
+            title = #{title},
+            keyword = #{keyword},
+            description = #{description},
+            update_flag = 1,
+            update_date = now()
+        where id = #{contentId}
+    </update>
+
+    <update id="delete" parameterType="Long">
+        update tb_content
+        set delete_flag = 1,
+            delete_date = now()
+        where id = #{contentId}
+    </update>
+
+    <select id="searchAndCountContentsById" parameterType="com.sloop.archive.common.pagination.SearchDTO" resultType="int">
+        select count(*)
+            from tb_content
+        <if test='searchType != null and searchType != 0'>
+            <where>
+                <choose>
+                    <when test="searchType == 1">
+                            title like concat('%' , #{searchWord} , '%')
+                    </when>
+                    <when test="searchType == 2">
+                        and description like concat('%' , #{searchWord} , '%')
+                    </when>
+                    <when test="searchType == 3">
+                        and (title like concat('%' , #{searchWord} , '%') or description like concat('%', #{searchWord}, '%'))
+                    </when>
+                </choose>
+            </where>
+        </if>
+    </select>
+
+    <select id="getAllListPagingbyId" parameterType="com.sloop.archive.common.pagination.SearchDTO" resultType="com.sloop.archive.content.domain.ContentDTO">
+        SELECT DISTINCT c.id , c.user_id , c.type ,c.charge ,c.view,c.title ,c.keyword ,c.description ,c.register_date ,c.update_flag ,c.update_date ,c.delete_flag ,c.delete_date ,c.approve_flag ,c.approve_user_id
+        ,i.id ,i.content_id, i.extension ,i.original_name ,i.saved_name ,i.thumb_name ,i.original_path ,i.original_path ,i.saved_path ,i.thumb_path
+        FROM tb_content AS c
+        INNER JOIN tb_image AS i ON c.id = i.content_id
+        where approve_flag = 1
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test="searchType == 1">
+                    and title like concat('%' , #{searchWord} , '%')
+                </when>
+                <when test="searchType == 2">
+                    and description like concat('%' , #{searchWord} , '%')
+                </when>
+                <when test="searchType == 3">
+                    and (title like concat('%' , #{searchWord} , '%') or description like concat('%', #{searchWord}, '%'))
+                </when>
+            </choose>
+        </if>
+        order by c.id desc , c.register_date desc
+        limit #{postsPerPage} offset #{offset}
+
+    </select>
+
+    <select id="getNotApprAllListPagingbyId" parameterType="com.sloop.archive.common.pagination.SearchDTO" resultType="com.sloop.archive.content.domain.ContentDTO">
+        SELECT DISTINCT c.id , c.user_id , c.type ,c.charge ,c.view,c.title ,c.keyword ,c.description ,c.register_date ,c.update_flag ,c.update_date ,c.delete_flag ,c.delete_date ,c.approve_flag ,c.approve_user_id
+        ,i.id ,i.content_id, i.extension ,i.original_name ,i.saved_name ,i.thumb_name ,i.original_path ,i.original_path ,i.saved_path ,i.thumb_path
+        FROM tb_content AS c
+        INNER JOIN tb_image AS i ON c.id = i.content_id
+        where approve_flag = 0
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test="searchType == 1">
+                   and title like concat('%' , #{searchWord} , '%')
+                </when>
+                <when test="searchType == 2">
+                    and description like concat('%' , #{searchWord} , '%')
+                </when>
+                <when test="searchType == 3">
+                    and (title like concat('%' , #{searchWord} , '%') or description like concat('%', #{searchWord}, '%'))
+                </when>
+            </choose>
+        </if>
+        order by c.id desc , c.register_date desc
+        limit #{postsPerPage} offset #{offset}
+
+    </select>
+
+    <update id="approve" parameterType="Long">
+        update tb_content
+        set approve_flag = 1
+        where id = #{id}
+    </update>
+
+    <update id="notApprove" parameterType="int">
+        update tb_content
+        set approve_flag = 0
+        where id = #{id}
+    </update>
+
+    <select id="findContentsAndImageByContentId" parameterType="Long" resultType="com.sloop.archive.content.domain.ContentDTO">
+        select c.id , c.user_id , c.type, c.charge, c.view, c.title, c.keyword, c.description,
+               c.register_date, c.update_flag, c.update_date, c.delete_flag, c.delete_date, c.approve_flag, c.approve_user_id,
+               i.id , i.content_id, i.extension, i.original_name, i.saved_name, i.thumb_name, i.original_path, i.saved_path, i.thumb_path, cc.category_id as categoryId
+        from tb_content as c
+                inner join tb_image as i on c.id = i.content_id
+                inner join tb_content_category as cc on c.id = cc.content_id
+        where c.id = #{contentId}
+    </select>
+
+    <!--이미지 이름으로 콘텐츠 정보 가져오기 -->
+    <select id="findByFilename" parameterType="String" resultType="Long">
+        SELECT DISTINCT c.id ,i.content_id
+        from tb_image AS i
+        JOIN tb_content AS c ON c.id = i.content_id
+        where i.saved_name = #{filename}
+    </select>
+</mapper>

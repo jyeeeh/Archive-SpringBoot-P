@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.sloop.archive.front.mapper.FrontMapper'>
+
+    <sql id="selectContent">
+        SELECT
+            tc.id
+             ,tc.user_id
+             ,tc.`type`
+             ,tc.charge
+             ,tc.`view`
+             ,tc.title
+             ,tc.keyword
+             ,tc.description
+             ,ti.thumb_name
+             ,ti.thumb_path
+             ,ti.saved_name
+        FROM
+            tb_content tc
+                LEFT JOIN tb_image ti ON
+                tc.id = ti.content_id
+        WHERE tc.delete_flag = 0
+--           AND tc.`view` = 1
+          AND tc.approve_flag = 1
+    </sql>
+    <!--<include refid="contentColumns"/>-->
+    <select id="selectContents" parameterType="hashmap" resultType="com.sloop.archive.front.domain.ContentSearchDTO">
+        <include refid="selectContent"></include>
+        <if test="searchKeyword != null and !searchKeyword.equals('')">
+            AND (tc.title REGEXP #{searchKeyword}
+            OR tc.keyword REGEXP #{searchKeyword})
+        </if>
+        <if test="searchContentType != null and !searchContentType.equals('')">
+            AND tc.`type` = #{searchContentType}
+        </if>
+    </select>
+
+    <select id="selectContentById" parameterType="java.lang.String" resultType="com.sloop.archive.front.domain.ContentSearchDTO">
+        <include refid="selectContent"></include>
+        <if test="id != null and !id.equals('')">
+            AND tc.id = #{id}
+        </if>
+    </select>
+
+    <select id="selectNoticeList" resultType="hashmap">
+        SELECT
+            tn.id
+             , tn.user_id
+             , tn.title
+             , DATE_FORMAT(tn.register_date, '%Y-%m-%d') AS register_date
+             , tn.pinned
+        FROM
+            tb_notice tn
+        WHERE tn.delete_flag = 0
+        ORDER BY tn.id DESC
+    </select>
+
+    <select id="selectNotice" parameterType="java.lang.String" resultType="hashmap">
+        SELECT
+            tn.id
+             , tn.user_id
+             , tn.title
+             , tn.pinned
+             , tn.content
+             , DATE_FORMAT(tn.register_date, '%Y-%m-%d') AS register_date
+        FROM
+            tb_notice tn
+        WHERE tn.delete_flag = 0
+          AND tn.id=#{id}
+    </select>
+
+</mapper>
