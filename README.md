@@ -135,7 +135,8 @@
 
 <details>
   <summary>ER 다이어그램</summary>
-
+  
+  ![classArchiveERD](https://github.com/S-loop/Archive-SpringBoot/assets/74610908/36ead811-aa0f-42c6-bdb2-ccb936a247bb)
 </details>
 
 <br>
