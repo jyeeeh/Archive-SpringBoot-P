@@ -173,7 +173,20 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 
 
 <!-- 지혜 -->
+### [ 통계 관리 ]
+- 접속자 수, 콘텐츠 통계를 확인할 수 있습니다
+#### 접속자 수
+- 접속량을 확인 할 수 있습니다. 원하는 기간을 설정하여 확인할 수 있습니다.
 
+| 기간 설정 전 | 기간 설정 후 |
+| -- | -- |
+| ![1-1](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/30629fd2-8b2a-4e0d-947b-852d4826618e) | ![1-2](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/f7599c96-2577-4d0a-b93a-24a11502de3a) |
+
+#### 콘텐츠 통계
+- 파일다운로드 수, 컨텐츠 조회수를 확인할 수 있습니다.
+- 상위 10개까지 표시됩니다
+
+<br/>
 
 
 
