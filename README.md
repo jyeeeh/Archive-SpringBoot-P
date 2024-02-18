@@ -156,7 +156,12 @@
 
 
 <!-- 지연 -->
+### [ 카테고리 관리 ]
+- 카테고리를 추가하거나 수정할 수 있습니다.
 
+https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-b956-702317ab79d4
+
+<br/>
 
 
 <!-- 창규 -->
