@@ -14,17 +14,14 @@
 
 ## 프로젝트 소개
 
-### 👨‍🏫 그룹 스터디를 개설하여 학습하는 공간
-- 학생들이 스터디 모임을 형성하여 과제를 인증하고, 학업 성취도를 향상하는 데에 도움을 줍니다.
-  ### 🔍 특징
-  - 스터디 인증 기능을 통해 학생의 공부 과정을 기록합니다.
-  - LMS 시스템을 통해 학습을 자기 주도적으로 관리할 수 있도록 도움을 줍니다.
+### 👨‍🏫 콘텐츠 공유 사이트의 CMS
+- 유저의 메인 페이지에 노출되는 콘텐츠를 관리하고, 사용자 관리 및 사용 통게를 확인할 수 있는 관리 시스템입니다.
   ### 👉 프로젝트 바로가기
   <div align="center">
   
-  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="100" height="100"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9" width="100" height="100"/> | <img src="https://github.com/kimg1623/Sloop-Spring/assets/40616792/b9e42f8a-60ab-42cb-832f-c20ad5107ecf" width="100"/> |
-  | :---: | :---: | :---: |
-  | [GitHub](https://github.com/S-loop/Sloop-Spring) | [Notion 팀회의록](https://geee1-kim.notion.site/Spring-Sloop-6a945387786344ca939c9c755cf0fdd7?pvs=4) | [최종발표자료](https://www.canva.com/design/DAF6IMT-MRg/kg9FgWtSGAiejukB4scMvQ/view?utm_content=DAF6IMT-MRg&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel#1) |
+  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="100" height="100"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9" width="100" height="100"/> |
+  | :---: | :---: |
+  | [GitHub](https://github.com/S-loop/Archive-SpringBoot) | [Notion 팀회의록](https://geee1-kim.notion.site/Project-e8c4c46a39294801a106e56b0c1ced61?pvs=4) |
  </div>
 
 <br><br>
@@ -38,7 +35,7 @@
 | :------: |  :------: | :------: | :------: | :------: |
 | [<img src="https://avatars.githubusercontent.com/u/40616792?v=4" height=140 width=140> <br/> @kimg1623](https://github.com/kimg1623) | [<img src="https://avatars.githubusercontent.com/u/74610908?v=4" height=140 width=140> <br/> @thegreatjy](https://github.com/thegreatjy) | [<img src="https://avatars.githubusercontent.com/u/145524731?v=4" height=140 width=140> <br/> @kidchang93](https://github.com/kidchang93)  | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=140 width=140> <br/> @Eumnya415](https://github.com/Eumnya415) | [<img src="https://avatars.githubusercontent.com/u/145963612?v=4" height=140 width=140> <br/> @jyeeeh](https://github.com/jyeeeh) |
 | 총괄 리더 | 개발 리더 | 일정 리마인더 | 에디터 | 백업 리마인더 |
-| 스터디 그룹 ERD<br>스터디 그룹 기능<br>Front-end/Tiles | 카테고리 관리 | 회원 ERD / 기능<br>공지 게시판<br>Spring Security | 댓글 기능<br>메인(헤더, 푸터) 페이지<br>Front-end | 공부 인증 게시판<br>Front-end<br>코드 백업 및 Git 관리 | 
+| 사용자 관리 | 카테고리 관리 | 콘텐츠 관리 | 공지사항 관리 | 통계 관리 | 
 
 </div>
 
@@ -108,28 +105,6 @@
 
 ## 3. 요구사항 명세 및 다이어그램
 👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.(작업중)
-<details>
-  <summary>요구사항 명세서</summary>
-      
-</details>
-
-  
-<br>
-
-<details>
-  <summary>유스케이스 다이어그램</summary>
-
-</details>
-
-<br>
-
-
-<details>
-  <summary>클래스 다이어그램</summary>
-
-  
-</details>
-
 
 <br>
 
@@ -144,14 +119,13 @@
 
 ## 4. 구현 기능
 
-### [ 상단 고정 메뉴 ( Header ) ]
-- 누르면 메인 페이지로 이동시켜주는 로고
+<!-- 지원 -->
+### [ 사용자 관리 ]
+- CMS와 유저 페이지에 접근할 수 있는 사용자를 권한별로 관리합니다.
   
-![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/90afa3e5-9186-4b20-b00c-00a30c517b19)
+https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-b956-702317ab79d4
 
 <br>
-
-<!-- 지원 -->
 
 
 
@@ -174,7 +148,7 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 
 <!-- 지혜 -->
 ### [ 통계 관리 ]
-- 접속자 수, 콘텐츠 통계를 확인할 수 있습니다
+- 접속자 수, 콘텐츠 통계를 확인할 수 있습니다.
 #### 접속자 수
 - 접속량을 확인 할 수 있습니다. 원하는 기간을 설정하여 확인할 수 있습니다.
 
