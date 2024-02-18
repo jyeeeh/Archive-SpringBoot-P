@@ -38,7 +38,7 @@
 | :------: |  :------: | :------: | :------: | :------: |
 | [<img src="https://avatars.githubusercontent.com/u/40616792?v=4" height=140 width=140> <br/> @kimg1623](https://github.com/kimg1623) | [<img src="https://avatars.githubusercontent.com/u/74610908?v=4" height=140 width=140> <br/> @thegreatjy](https://github.com/thegreatjy) | [<img src="https://avatars.githubusercontent.com/u/145524731?v=4" height=140 width=140> <br/> @kidchang93](https://github.com/kidchang93)  | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=140 width=140> <br/> @Eumnya415](https://github.com/Eumnya415) | [<img src="https://avatars.githubusercontent.com/u/145963612?v=4" height=140 width=140> <br/> @jyeeeh](https://github.com/jyeeeh) |
 | 총괄 리더 | 개발 리더 | 일정 리마인더 | 에디터 | 백업 리마인더 |
-| 스터디 그룹 ERD<br>스터디 그룹 기능<br>Front-end/Tiles | 게시판 ERD 설계<br>자유 게시판<br>과제 게시판 | 회원 ERD / 기능<br>공지 게시판<br>Spring Security | 댓글 기능<br>메인(헤더, 푸터) 페이지<br>Front-end | 공부 인증 게시판<br>Front-end<br>코드 백업 및 Git 관리 | 
+| 스터디 그룹 ERD<br>스터디 그룹 기능<br>Front-end/Tiles | 카테고리 관리 | 회원 ERD / 기능<br>공지 게시판<br>Spring Security | 댓글 기능<br>메인(헤더, 푸터) 페이지<br>Front-end | 공부 인증 게시판<br>Front-end<br>코드 백업 및 Git 관리 | 
 
 </div>
 
