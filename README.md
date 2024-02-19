@@ -234,10 +234,184 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 ### 논리 삭제 메서드
 ![delete](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/98a3aea8-580b-46dd-a3b3-0cd0cbc8c1fb)
 
+<br>
 
 <!-- 소영 -->
+### [ 공지사항 관리 ]
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/7f76bae6-ad13-42b2-9520-284f468a03b5)
+<br>
+ - 관리자로 로그인했을 시 사용자 페이지에 표시될 공지사항 게시판을 관리할 수 있습니다.
+
+<br>
+
+### 게시글 상단 고정 기능
+- 글을 작성할 때 ‘구분’ 에서 ‘중요’에 표시하면 게시글 목록에서 제목 앞에 [중요] 표시가 뜨고, 상단에 고정
+  
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### BACK
+  
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/f7f9eaa9-7352-41c9-bfc6-a84505b1d04d)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/b22c0500-6591-461a-bd16-91d59100533b)
 
 
+</details>
+
+<br>
+
+### 게시판 페이징 기능
+- 게시글 10개마다 페이징기능이 적용
+
+<details>
+  <summary><h3>CODE</h3></summary>
+
+#### BACK
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/8f7784fa-bd2a-4ef1-a310-1e2130ca95e9)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/e09479aa-3c57-4b03-8763-6fa3ef3e2ac9)
+
+</details>
+
+<br>
+
+### 조회수 표시 및 카운팅
+- 게시글 열람 횟수만큼 조회수가 증가
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### BACK
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/d4a9f717-48f1-4d1f-a6c6-3d92c9c0815d)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/6b951f44-bb28-41b0-a1cc-9b73c27d7d8a)
+
+</details>
+
+<br>
+
+### 검색기능
+- 제목이나 내용에 검색한 키워드가 포함되면 결과로 표시
+- 검색 결과 화면에 페이징 기능이 적용되어 게시글이 10개씩 표출
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### BACK
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/4237b61b-0e60-4995-9d3c-784847f12249)
+
+#### SERVICE
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/3ba5a1f1-330b-40e2-8307-1543f89279e4)
+
+
+</details>
+
+<br>
+
+### 공지사항 글 작성하기
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/88a40dca-72c5-47a7-8ba8-7ae52229b44c)
+
+### CKEditor 적용
+- 이미지 업로드 및 스타일 적용이 가능한 CKEditor를 적용
+
+### 상단 고정 기능
+- ‘구분’탭에서 ‘일반’으로 기본 적용
+- ‘구분’탭에서 ‘중요’버튼을 누르면 게시판 목록에서 상단 고정
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### SERVICE
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/1e6c8e72-de63-4cf3-9459-6fa00e361a73)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/1de9a454-45de-42de-80ea-4be363af616d)
+
+</details>
+
+### 유효성 검증
+- 제목과 내용 둘 다 입력해야 글 작성이 가능하다.
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### BACK
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/2ea4a1eb-7376-465d-844a-77f638f8eaca)
+
+#### SERVICE
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/2451a62d-3fbc-4af5-9128-1aac366075c6)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/2eb0fbf9-3e3e-4997-b349-000375516a7a)
+
+</details>
+  
+<br>
+
+### 초기화 
+- 초기화 버튼을 누르면 작성중인 내용이 초기화된다.
+
+<details>
+  <summary><h3>CODE</h3></summary>
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/14321f87-2f82-4568-a0e7-9063907653a0)
+
+</details>
+
+<br>
+
+### 공지사항 상세보기
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/21ce9a73-f04e-4f4d-a5fc-fa24e0b0f9e9)
+ - 관리자로 로그인했을 시 수정, 삭제가 가능합니다.
+
+### 공지사항 수정
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/59febb74-a40f-41d5-97a6-dce2c326e39a)
+
+#### SERVICE
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/9afc12d8-0f60-45d5-a759-ecff9bd354a2)
+
+</details>
+
+<br>
+
+### 공지사항 삭제
+
+<details>
+  <summary><h3>CODE</h3></summary>
+  
+#### BACK
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/3f0cd62f-7370-4dc5-a45f-04a6c9b84eff)
+
+#### FRONT
+
+![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/73bc8028-5871-41f5-a72f-9ddbf242309b)
+
+</details>
+
+<br>
+<br>
 
 <!-- 지혜 -->
 ### [ 통계 관리 ]
