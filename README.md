@@ -7,8 +7,8 @@
 1. [개발 환경](#1-개발-환경)
 2. [개발 기간 및 작업 관리](#2-개발-기간-및-작업-관리)
 3. [요구사항 명세 및 다이어그램](#3-요구사항-명세-및-다이어그램)     
-4. [구현 기능](#4-구현-기능)
-5. [개인 회고](#5-개인-회고)      
+4. [구현 기능](#4-구현-기능)      
+<!--5. [개인 회고](#5-개인-회고)      -->
 
 <br>
 
@@ -104,13 +104,24 @@
 
 
 ## 3. 요구사항 명세 및 다이어그램
-👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.(작업중)
+👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.
+<details>
+  <summary>1) 요구사항 명세</summary>
+  <img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/c7ff4e1f-683e-43dd-ba01-cff057ee674f">
+</details>
 
 <br>
 
 <details>
-  <summary>ER 다이어그램</summary>
-  
+  <summary>2) 역기획서</summary>
+  <a href="https://drive.google.com/file/d/1D_f6B38F2IilvEIvDk-xz2KI_eOJOAYn/view?usp=sharing">역기획서 pdf 바로보기</a>
+  <img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/c76be3d4-06cb-4112-b9d6-125de80b48e4">
+</details>
+
+<br>
+
+<details>
+  <summary>3) ER 다이어그램</summary>
   ![classArchiveERD](https://github.com/S-loop/Archive-SpringBoot/assets/74610908/36ead811-aa0f-42c6-bdb2-ccb936a247bb)
 </details>
 
@@ -118,66 +129,34 @@
 
 
 ## 4. 구현 기능
+### [ 클래스 아카이브 관리자 CMS 메인 메뉴 구성 ]
+- 1) 콘텐츠 관리
+- 2) 카테고리 관리
+- 3) 통계 관리
+- 4) 사용자 관리
+- 5) 서비스 관리(공지사항 관리)
+<img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/54d2e37f-5697-4ec0-9555-4d4c056937d6">
 
-<!-- 지원 -->
-### [ 사용자 관리 ]
-- CMS와 유저 페이지에 접근할 수 있는 사용자를 권한별로 관리합니다.
-  
-https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-b956-702317ab79d4
+### [ 구현 기능 살펴보기 ]
+👉개발 화면 및 소스코드를 아래 토글메뉴를 눌러서 확인해주세요.
 
-<br>
-
-
-
-<!-- 지연 -->
-### [ 카테고리 관리 ]
-- 카테고리를 추가하거나 수정할 수 있습니다.
-
-https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-b956-702317ab79d4
-
-<br/>
+### 1) 콘텐츠 관리
+- 개발 담당자 : 이창규
 
 
-<!-- 창규 -->
-### [ 콘텐츠 관리 ]
-> - [콘텐츠 관리 (by 이창규)](#콘텐츠-관리-(by-이창규))
->>    + [콘텐츠 등록](#콘텐츠-등록)
->>    + [콘텐츠 등록 - 백엔드 코드](#콘텐츠-등록---백엔드-코드)
->>    + [등록 후 미승인 콘텐츠 탭으로 이동](#등록-후-미승인-콘텐츠-탭으로-이동)
->    + [승인 버튼 기능 - 누르면 해당 콘텐츠 권한 변경](#승인-버튼-기능---누르면-해당-콘텐츠-권한-변경)
->>    + [승인 버튼 기능 - 백엔드 코드](#승인-버튼-기능---백엔드-코드)
->>    + [승인 버튼 기능 - 프론트 코드](#승인-버튼-기능---프론트-코드)
->>    + [승인된 콘텐츠는 미승인 콘텐츠 -> 전체 콘텐츠](#승인된-콘텐츠는-미승인-콘텐츠-->-전체-콘텐츠)
->>    + [전체 콘텐츠에서 확인](#전체-콘텐츠에서-확인)
->>    + [승인된 콘텐츠만 사용자 화면 출력](#승인된-콘텐츠만-사용자-화면-출력)
->>    + [미승인 콘텐츠는 사용자 화면 출력 X](#미승인-콘텐츠는-사용자-화면-출력-x)
->>    + [미승인 콘텐츠 승인](#미승인-콘텐츠-승인)
->>    + [사용자 화면 출력](#사용자-화면-출력)
->    + [콘텐츠 수정](#콘텐츠-수정)
->>    + [수정시 미리보기 & 새로운 파일 추가시 미리보기](#수정시-미리보기-&-새로운-파일-추가시-미리보기)
->    + [S3 config](#s3-config)
->>    + [Generate PresignedURL 메서드](#generate-presignedurl-메서드)
->>    + [업로드시 byte로 변환 하는 메서드](#업로드시-byte로-변환-하는-메서드)
->>    + [공용 클래스 fileUtils 필드 주입](#공용-클래스-fileUtils-필드-주입)
->>    + [S3 업로드 - 백엔드 코드](#S3-업로드---백엔드-코드)
->>    + [파일 저장 메서드](#파일-저장-메서드)
->    + [다운로드 기능](#다운로드-기능)
->>    + [다운로드 기능 - 백엔드 코드 1](#다운로드-기능---백엔드-코드-1)
->>    + [다운로드 기능 - 백엔드 코드 2](#다운로드-기능---백엔드-코드-2)
->    + [리스트 출력시 for문을 돌면서 presignedURL 받아오기](#리스트-출력시-for문을-돌면서-presignedURL-받아오기)
->>    + [전체 콘텐츠 & 미승인 콘텐츠 리스트 출력시 서로 다른 SQL문 사용](#전체-콘텐츠-&-미승인-콘텐츠-리스트-출력시-서로-다른-SQL문-사용)
->>    + [리스트 출력 프론트 코드](#리스트-출력-프론트-코드)
->    + [상세보기 팝업창](#상세보기-팝업창)
->>    + [상세보기 팝업창 - 프론트 코드](#상세보기-팝업창---프론트-코드)
->    + [논리 삭제 메서드](#논리-삭제-메서드)
+<details>
+<summary><b>콘텐츠 관리(등록,리스트)</b></summary>
 
-
-### 콘텐츠 등록
 ![create](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/00d19ce4-1201-4f13-b4cd-e4d734efde72)
 ### 콘텐츠 등록 - 백엔드 코드
 ![saved_content](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/5020b479-f810-45f9-88c4-ccbbbab35e08)
 ### 등록 후 미승인 콘텐츠 탭으로 이동
 ![등록후미승인콘텐츠](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/8bcad0c0-9444-44de-91a9-8491693fae79)
+</details>
+
+<details>
+<summary><b>등록한 콘텐츠 승인 기능</b></summary>
+
 ### 승인 버튼 기능 - 누르면 해당 콘텐츠 권한 변경
 ![승인으로권한변경](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/5ad74ad1-8465-4abd-bfcc-82242267e602)
 ### 승인 버튼 기능 - 백엔드 코드
@@ -199,6 +178,11 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 ![update](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/a06488ed-8219-4413-ba4b-2e6e897629be)
 ### 수정시 미리보기 & 새로운 파일 추가시 미리보기
 ![update2](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/87648821-c2ec-4dde-ad25-1c3b5fa23dd6)
+  
+</details>
+
+<details>
+<summary><b>AWS S3 업로드 </b></summary>
 
 ### S3 config
 ![s3config](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/438d6d7e-f330-4be2-bc15-db90607089f6)
@@ -212,6 +196,11 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 ![s3Upload](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/a5b96a70-f461-470e-8d20-9e3f3bcf29c4)
 ### 파일 저장 메서드
 ![savefiles](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/27f2f9f5-02d8-482e-9b8f-f01a7aa2d977)
+
+</details>
+
+<details>
+<summary><b>AWS S3 다운로드 </b></summary>
 
 ### 다운로드 기능
 ![다운로드 클릭시](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/81790260-e23d-4acd-b477-0272cf80a3bf)
@@ -227,20 +216,108 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 ### 리스트 출력 프론트 코드
 ![리스트front](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/4579a8cd-cd52-41f5-b0ac-66a191f333a9)
 
+</details>
+
+<details>
+<summary><b>상세보기 팝업창</b></summary>
+
 ### 상세보기 팝업창
 ![리스트팝업창2](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/764af1aa-963e-430d-87b7-a668b38f9b30)
 ### 상세보기 팝업창 - 프론트 코드
 ![리스트팝업창](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/d016f8e1-2e5b-4333-8a1b-9946e2fa0f02)
 ### 논리 삭제 메서드
 ![delete](https://github.com/kidchang93/Archive-SpringBoot/assets/145524731/98a3aea8-580b-46dd-a3b3-0cd0cbc8c1fb)
-
+</details>
 <br>
 
-<!-- 소영 -->
-### [ 공지사항 관리 ]
+### 2) 카테고리 관리
+- 개발 담당자 : 이지연
+- 카테고리를 추가하거나 수정할 수 있습니다.
+
+https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-b956-702317ab79d4
+
+<br/>
+
+
+### 3) 통계 관리
+- 개발 담당자 : 최지혜
+- 접속자 수, 콘텐츠 통계를 확인할 수 있습니다.
+#### 접속자 수
+- 접속량을 확인 할 수 있습니다. 원하는 기간을 설정하여 확인할 수 있습니다.
+
+| 기간 설정 전 | 기간 설정 후 |
+| -- | -- |
+| ![1-1](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/30629fd2-8b2a-4e0d-947b-852d4826618e) | ![1-2](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/f7599c96-2577-4d0a-b93a-24a11502de3a) |
+
+#### 콘텐츠 통계
+- 파일다운로드 수, 컨텐츠 조회수를 확인할 수 있습니다.
+- 상위 10개까지 표시됩니다
+
+
+
+
+
+<br/>
+
+
+### 4) 사용자 관리
+- 개발 담당자 : 김지원
+- CMS와 유저 페이지에 접근할 수 있는 사용자를 권한별로 관리합니다.
+
+#### 사용자 등록
+- ID 중복체크 : DB에 계정 ID와 중복되지 않도록 확인
+- form 요소마다 유효성 검사 진행 : front와 back(@Valid)에서 모두 진행
+
+
+
+https://github.com/S-loop/Archive-SpringBoot/assets/40616792/f43d0bc4-7d6d-49d1-83a0-e7450e71099c
+
+
+
+<details>
+  <summary>소스코드 확인하기</summary>
+  <ul>
+    <li>
+      front
+      <img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/023d01a3-0538-4066-987f-8549fbff6069">
+    </li>
+    <li>
+      back(Request 객체DTO, @Valid)
+      <img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/27a95003-8893-4efe-a90a-beb3f0af9ae0">
+      <img src="https://github.com/S-loop/Archive-SpringBoot/assets/40616792/acc0ec52-3f15-4480-971b-54ef2887e30b">
+    </li>
+  </ul>
+</details>
+<br/>
+
+
+#### 사용자 권한수정
+- 상세 조회 페이지에서 개별 권한 수정 기능
+- 수정 페이지에서 권한과 정보 수정 가능
+
+
+https://github.com/S-loop/Archive-SpringBoot/assets/40616792/9d118bb7-56bb-4625-be64-14e82c9f6cbb
+
+
+<br/>
+
+#### 사용자 로그인
+- 로그인한 사용자의 권한에 따라서 로그인시 페이지를 다르게 리다이렉트
+- 메인페이지에서 관리자 로그인 시, 관리자CMS 메뉴가 보임
+
+
+https://github.com/S-loop/Archive-SpringBoot/assets/40616792/5343057f-5c06-4b68-8313-1def1a6ff275
+
+<br/>
+
+
+
+### 5) 공지사항 관리
+- 개발 담당자 : 차소영
+- 관리자로 로그인했을 시 사용자 페이지에 표시될 공지사항 게시판을 관리할 수 있습니다.
 ![image](https://github.com/S-loop/Archive-SpringBoot/assets/145963611/7f76bae6-ad13-42b2-9520-284f468a03b5)
 <br>
- - 관리자로 로그인했을 시 사용자 페이지에 표시될 공지사항 게시판을 관리할 수 있습니다.
+
 
 <br>
 
@@ -413,21 +490,7 @@ https://github.com/S-loop/Archive-SpringBoot/assets/74610908/7fc1170e-b771-4b9a-
 <br>
 <br>
 
-<!-- 지혜 -->
-### [ 통계 관리 ]
-- 접속자 수, 콘텐츠 통계를 확인할 수 있습니다.
-#### 접속자 수
-- 접속량을 확인 할 수 있습니다. 원하는 기간을 설정하여 확인할 수 있습니다.
 
-| 기간 설정 전 | 기간 설정 후 |
-| -- | -- |
-| ![1-1](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/30629fd2-8b2a-4e0d-947b-852d4826618e) | ![1-2](https://github.com/S-loop/Archive-SpringBoot/assets/145963612/f7599c96-2577-4d0a-b93a-24a11502de3a) |
-
-#### 콘텐츠 통계
-- 파일다운로드 수, 컨텐츠 조회수를 확인할 수 있습니다.
-- 상위 10개까지 표시됩니다
-
-<br/>
 
 
 
